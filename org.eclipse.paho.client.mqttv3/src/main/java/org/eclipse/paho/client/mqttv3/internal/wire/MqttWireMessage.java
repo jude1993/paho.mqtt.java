@@ -375,8 +375,6 @@ public abstract class MqttWireMessage {
 			return output;
 		} catch (IOException ex) {
 			throw new MqttException(ex);
-		} catch (IllegalArgumentException e) {
-			return new String(errorByteArr);
 		}
 	}
 	/**
