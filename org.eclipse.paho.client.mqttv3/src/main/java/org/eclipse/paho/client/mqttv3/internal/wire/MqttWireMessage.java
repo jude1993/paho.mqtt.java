@@ -361,20 +361,15 @@ public abstract class MqttWireMessage {
 			encodedLength = input.readUnsignedShort();
 
 			byte[] encodedString = new byte[encodedLength];
-			input.readFully(encodedString);
 			errorByteArr = encodedString;
-			//System.out.print("接受原始数据:");
-			for (byte b : encodedString) {
-				System.out.print(b);
-			}
-			//System.out.println();
+			input.readFully(encodedString);
 			String output = new String(encodedString, STRING_ENCODING);
-			//System.out.println("received to string:"+ output);
 			validateUTF8String(output);
-
 			return output;
 		} catch (IOException ex) {
 			throw new MqttException(ex);
+		} catch (IllegalArgumentException e){
+			return new String(errorByteArr, STRING_ENCODING);
 		}
 	}
 	/**
